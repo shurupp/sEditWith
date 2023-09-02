@@ -19,16 +19,16 @@ if (app.selection != 0) {
             alert(app.selection[0]);
             myFilePath = mySel.allGraphics[0].itemLink.filePath;
 
-            alert(myFilePath);
-            alert(myFilePath.split('.').reverse()[0]);
+            //alert(myFilePath);
+            //alert(myFilePath.split('.').reverse()[0]);
             myFileExt = myFilePath.split('.').reverse()[0];
             break;
         case "Image":
-            alert(app.selection[0]);
-            alert(app.selection[0].parent);
+            //alert(app.selection[0]);
+            //alert(app.selection[0].parent);
             myFilePath = mySel.parent.allGraphics[0].itemLink.filePath;
-            alert(myFilePath);
-            alert(myFilePath.split('.').reverse()[0]);
+            //alert(myFilePath);
+            //alert(myFilePath.split('.').reverse()[0]);
             myFileExt = myFilePath.split('.').reverse()[0];
             break;
         default:
@@ -42,10 +42,12 @@ if (app.selection != 0) {
         case "eps":
         case "ai":
         case "pdf":
-            //alert(app.menuActions.itemByName("$ID/Adobe Illustrator 2023 27.1").title, app.menuActions.itemByName("$ID/Adobe Illustrator 2023 27.1").id);
+          // alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").title);
+            //alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").id);
+            
             //app.menuActions.itemByName("Adobe Illustartor 2023 27.1").invoke();
-            app.menuActions.itemByName("Adobe Illustartor 2023 27.1").invoke();
-            //app.menuActions[132813].invoke();
+            app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").invoke();
+            //app.menuActions[132811].invoke();
             break;
         case "jpg":
         case "jpeg":
@@ -54,10 +56,11 @@ if (app.selection != 0) {
         case "png":
         case "tif":
         case "psd":
-            alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.1").title, app.menuActions.itemByName("Adobe Photoshop 2023 24.1").id);
-            //app.menuActions[132815].invoke();
+            //alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").title);
+            //alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").id);
+            //app.menuActions[132812].invoke();
             //app.menuActions.itemByName("Adobe Photoshop 2023 24.1").invoke();
-            app.menuActions.item("$ID/Adobe Photoshop 2023 24.1").invoke();
+            app.menuActions.item("$ID/Adobe Photoshop 2023 24.7 (default)").invoke();
             break;
         default:
             alert("Незнакомое расширение файла");
