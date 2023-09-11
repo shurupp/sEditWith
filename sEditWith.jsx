@@ -16,7 +16,7 @@ if (app.selection != 0) {
         case "Oval":
         case "Polygon":
         case "Rectangle":
-            alert(app.selection[0]);
+            //      alert(app.selection[0]);
             myFilePath = mySel.allGraphics[0].itemLink.filePath;
 
             //alert(myFilePath);
@@ -27,6 +27,7 @@ if (app.selection != 0) {
             //alert(app.selection[0]);
             //alert(app.selection[0].parent);
             myFilePath = mySel.parent.allGraphics[0].itemLink.filePath;
+            mySel.parent.select();
             //alert(myFilePath);
             //alert(myFilePath.split('.').reverse()[0]);
             myFileExt = myFilePath.split('.').reverse()[0];
@@ -37,16 +38,16 @@ if (app.selection != 0) {
     }
 
     myFileExt = myFileExt.toLowerCase();
-    alert(myFileExt);
+    //alert(myFileExt);
     switch (myFileExt) {
         case "eps":
         case "ai":
         case "pdf":
-          // alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").title);
-            //alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").id);
-            
+            // alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").title);
+            //   alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").id);
+
             //app.menuActions.itemByName("Adobe Illustartor 2023 27.1").invoke();
-            app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").invoke();
+            app.menuActions.itemByName("Adobe Illustrator 2023 27.8 (default)").invoke();
             //app.menuActions[132811].invoke();
             break;
         case "jpg":
@@ -56,23 +57,60 @@ if (app.selection != 0) {
         case "png":
         case "tif":
         case "psd":
-            //alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").title);
-            //alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").id);
+        case "heic":
+            //    alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").title);
+            //  alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").id);
             //app.menuActions[132812].invoke();
-            //app.menuActions.itemByName("Adobe Photoshop 2023 24.1").invoke();
-            app.menuActions.item("$ID/Adobe Photoshop 2023 24.7 (default)").invoke();
+//            app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
+app.menuActions.item("$ID/Adobe Photoshop 2023 24.7").invoke();
+//app.menuActions[132812].invoke();
+            /*
+
+            try {
+                app.menuActions.item("$ID/Adobe Photoshop 2023 24.7").invoke();
+            } catch (erCatch) {
+                alert('не ID', erCatch);
+            };
+            try {
+                app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
+            } catch (erCatch) {
+                alert('не Name', erCatch);
+            };
+            try {
+                app.menuActions[132812].invoke();
+            } catch (erCatch) {
+                alert('не number', erCatch);
+            };
+
+            try {
+                app.menuActions.item("$ID/Adobe Photoshop 2023 24.7 (default)").invoke();
+            } catch (erCatch) {
+                alert('не ID def', erCatch);
+            };
+            try {
+                app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").invoke();
+            } catch (erCatch) {
+                alert('не Name def', erCatch);
+            };
+            try {
+                app.menuActions[132812].invoke();
+            } catch (erCatch) {
+                alert('не number', erCatch);
+            };
+
+            */
+            // app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
             break;
         default:
             alert("Незнакомое расширение файла");
     }
-}
-else {
+} else {
     alert('нет выделения');
 }
 
 
 
-    
+
 /*
 var menuItem = app.menus.item("$ID/ParaStylePanelPopup").menuItems.item("$ID/Redefine Style");
 if(menuItem.isValid == false)
