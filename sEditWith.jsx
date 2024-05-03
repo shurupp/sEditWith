@@ -1,35 +1,24 @@
 var myDoc = app.activeDocument;
 
-// var myTool = app.toolBoxTools; //// НЕ РАБОТАЕТ
-// var myOldTool = myTool;
-// myTool.currentTool = UITools.DIRECT_SELECTION_TOOL;
-// переключаем на инструмент Direct Selection
-
-
 //GET SELECTION
 var mySel = app.selection[0];
 var myFileExt = '';
 
 if (app.selection != 0) {
+    alert(app.selection[0].constructor.name);
 
     switch (app.selection[0].constructor.name) {
         case "Oval":
         case "Polygon":
         case "Rectangle":
-            //      alert(app.selection[0]);
             myFilePath = mySel.allGraphics[0].itemLink.filePath;
-
-            //alert(myFilePath);
-            //alert(myFilePath.split('.').reverse()[0]);
             myFileExt = myFilePath.split('.').reverse()[0];
             break;
         case "Image":
-            //alert(app.selection[0]);
-            //alert(app.selection[0].parent);
+        case "PDF":
+        case "EPS":
             myFilePath = mySel.parent.allGraphics[0].itemLink.filePath;
-            mySel.parent.select();
-            //alert(myFilePath);
-            //alert(myFilePath.split('.').reverse()[0]);
+            //mySel.parent.select();
             myFileExt = myFilePath.split('.').reverse()[0];
             break;
         default:
@@ -39,16 +28,36 @@ if (app.selection != 0) {
 
     myFileExt = myFileExt.toLowerCase();
     //alert(myFileExt);
+
+    var phNameVer = "";
+    var illNameVer = "";
+    var phIDVer ;
+    var illIDVer ;
+
+    var a = app.menuActions.everyItem().getElements();
+
+    for (var i = 0; i < a.length; i++) {
+        if (a[i].name.search("Adobe Photoshop") != -1) {
+            alert(a[i].area + ' : ' + a[i].name, a[i].id);
+            phNameVer = a[i].name;
+        } 
+        if (a[i].name.search("Adobe Illustrator") != -1) {
+            alert(a[i].area + ' : ' + a[i].name, a[i].id);
+            illNameVer = a[i].name;
+            illIDVer = a[i].id;
+        }
+    }
+
     switch (myFileExt) {
         case "eps":
         case "ai":
         case "pdf":
-            // alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").title);
-            //   alert(app.menuActions.itemByName("Adobe Illustrator 2023 27.7 (default)").id);
+            //app.menuActions.itemByName(illNameVer).invoke();
+            alert (app.menuActions.itemByName(illNameVer), 'menu');
+            alert (app.menuActions.itemByName(illNameVer).name, 'name');
 
-            //app.menuActions.itemByName("Adobe Illustartor 2023 27.1").invoke();
-            app.menuActions.itemByName("Adobe Illustrator 2023 27.8 (default)").invoke();
-            //app.menuActions[132811].invoke();
+            alert (app.menuActions.itemByID(illIDVer).id, 'id');
+            app.menuActions.itemByID(illIDVer).invoke();
             break;
         case "jpg":
         case "jpeg":
@@ -58,56 +67,18 @@ if (app.selection != 0) {
         case "tif":
         case "psd":
         case "heic":
-            //    alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").title);
-            //  alert(app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").id);
-            //app.menuActions[132812].invoke();
-//            app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
-app.menuActions.item("$ID/Adobe Photoshop 2023 24.7").invoke();
-//app.menuActions[132812].invoke();
-            /*
+            alert (app.menuActions.itemByName(phNameVer), 'menu');
+            alert (app.menuActions.itemByName(phNameVer).name, 'name');
 
-            try {
-                app.menuActions.item("$ID/Adobe Photoshop 2023 24.7").invoke();
-            } catch (erCatch) {
-                alert('не ID', erCatch);
-            };
-            try {
-                app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
-            } catch (erCatch) {
-                alert('не Name', erCatch);
-            };
-            try {
-                app.menuActions[132812].invoke();
-            } catch (erCatch) {
-                alert('не number', erCatch);
-            };
-
-            try {
-                app.menuActions.item("$ID/Adobe Photoshop 2023 24.7 (default)").invoke();
-            } catch (erCatch) {
-                alert('не ID def', erCatch);
-            };
-            try {
-                app.menuActions.itemByName("Adobe Photoshop 2023 24.7 (default)").invoke();
-            } catch (erCatch) {
-                alert('не Name def', erCatch);
-            };
-            try {
-                app.menuActions[132812].invoke();
-            } catch (erCatch) {
-                alert('не number', erCatch);
-            };
-
-            */
-            // app.menuActions.itemByName("Adobe Photoshop 2023 24.7").invoke();
+            alert (app.menuActions.itemByID(phIDVer).id, 'id');
+            app.menuActions.itemByName(phNameVer).invoke();
             break;
         default:
             alert("Незнакомое расширение файла");
     }
 } else {
-    alert('нет выделения');
+    alert('Выделите фрейм с изображением', 'Нет выделения');
 }
-
 
 
 
