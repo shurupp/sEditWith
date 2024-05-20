@@ -124,8 +124,17 @@ if (app.selection != 0) {
             //alert(app.menuActions.itemByName(illNameVer).name, 'name');
 
             //alert(app.menuActions.itemByID(illIDVer).id, 'id');
-            //app.menuActions.itemByName(illNameVer).invoke();
-            app.menuActions.itemByID(illIDVer).invoke();
+
+            try {
+                app.menuActions.itemByName(illNameVer).invoke();
+                //app.menuActions.itemByID(illIDVer).invoke();
+            } catch (e) {
+                alert('Не удалось открыть в Illustrator', 'Error');
+                exit();
+            }
+
+
+
             break;
         case "jpg":
         case "jpeg":
@@ -140,8 +149,16 @@ if (app.selection != 0) {
 
             //alert(app.menuActions.itemByName(phNameVer).name, 'name = ');
             //alert (app.menuActions.itemByID(phIDVer).id, 'id = ');
-            //app.menuActions.itemByName(phNameVer).invoke();
-            app.menuActions.itemByID(phIDVer).invoke();
+
+            try {
+                app.menuActions.itemByName(phNameVer).invoke();
+                //app.menuActions.itemByID(phIDVer).invoke();
+            } catch (e) {
+                alert('Не удалось открыть в Photoshop', 'Error');
+                exit();
+            }
+
+
             break;
         default:
             alert("Незнакомое расширение файла");
