@@ -11,6 +11,7 @@ var phNameVer = '';
 var illNameVer = '';
 var phIDVer = 0;
 var illIDVer = 0;
+var myListMenu;
 
 if (app.selection != 0) {
 
@@ -85,18 +86,18 @@ if (app.selection != 0) {
 
     //var myListMenu = app.menus.item("$ID/Main").submenus.item("$ID/Edit").submenus.item("$ID/Edit With").submenus.everyItem().getElements();;
 
-    var myListMenu = app.menuActions.everyItem().getElements();
+    myListMenu = app.menuActions.everyItem().getElements();
     //var myListMenu = app.menus.everyItem().getElements();
-    alert(myListMenu.length);
+    //alert(myListMenu.length);
     for (var i = 0; i < myListMenu.length; i++) {
         if (myListMenu[i].name.search('Adobe Photoshop') != -1) {
-            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, '11111 ' + myListMenu[i].id);
+            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Phoroshop ID:' + myListMenu[i].id);
             phNameVer = myListMenu[i].name;
             phIDVer = myListMenu[i].id;
             //alert(phNameVer, i + ' zzzzzzzz');
         }
         if (myListMenu[i].name.search('Adobe Illustrator') != -1) {
-            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, '11111 ' + myListMenu[i].id);
+            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Illutrator ID: ' + myListMenu[i].id);
             illNameVer = myListMenu[i].name;
             illIDVer = myListMenu[i].id;
             //alert(IllNameVer, i + ' yyyyyyyyy');
@@ -149,6 +150,13 @@ if (app.selection != 0) {
 
             //alert(app.menuActions.itemByName(phNameVer).name, 'name = ');
             //alert (app.menuActions.itemByID(phIDVer).id, 'id = ');
+
+            try {
+                app.menuActions.item("$ID/Links").invoke()
+            } catch (e) {
+                alert('Не удалось открыть панель Links', 'Error');
+                exit();
+            }
 
             try {
                 app.menuActions.itemByName(phNameVer).invoke();
