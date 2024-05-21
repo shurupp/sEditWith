@@ -91,13 +91,13 @@ if (app.selection != 0) {
     //alert(myListMenu.length);
     for (var i = 0; i < myListMenu.length; i++) {
         if (myListMenu[i].name.search('Adobe Photoshop') != -1) {
-            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Phoroshop ID:' + myListMenu[i].id);
+            //alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Phoroshop ID:' + myListMenu[i].id);
             phNameVer = myListMenu[i].name;
             phIDVer = myListMenu[i].id;
             //alert(phNameVer, i + ' zzzzzzzz');
         }
         if (myListMenu[i].name.search('Adobe Illustrator') != -1) {
-            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Illutrator ID: ' + myListMenu[i].id);
+            //alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Illutrator ID: ' + myListMenu[i].id);
             illNameVer = myListMenu[i].name;
             illIDVer = myListMenu[i].id;
             //alert(IllNameVer, i + ' yyyyyyyyy');
@@ -105,12 +105,12 @@ if (app.selection != 0) {
     }
 
     if (illNameVer == '') {
-        alert('Adobe Illustrator не найден в контекстном меню', 'Error');
+        //alert('Adobe Illustrator не найден в контекстном меню', 'Error');
         //                exit();
     }
 
     if (phNameVer == '') {
-        alert('Adobe Photoshop не найден в контекстном меню', 'Error');
+        //alert('Adobe Photoshop не найден в контекстном меню', 'Error');
         //              exit();
     }
 
@@ -149,14 +149,21 @@ if (app.selection != 0) {
             //alert(app.menuActions.itemByName(phNameVer), 'menu');
 
             //alert(app.menuActions.itemByName(phNameVer).name, 'name = ');
-            //alert (app.menuActions.itemByID(phIDVer).id, 'id = ');
+            //alert(app.menuActions.itemByID(phIDVer).id, 'id = ');
 
-            try {
-                app.menuActions.item("$ID/Links").invoke()
-            } catch (e) {
-                alert('Не удалось открыть панель Links', 'Error');
-                exit();
-            }
+            /*
+                        try {
+                            app.menuActions.item("$ID/Links").invoke();
+                        } catch (e) {
+                            alert('Не удалось открыть панель Links', 'Error');
+                            exit();
+                        }
+            */
+
+//TODO НЕ срабатывает, если Photoshop (default)...
+
+
+ //TODO app.executeMenuCommand(".@class:AdobePhotoshop, .@target:'" + myFileExt + "'");
 
             try {
                 app.menuActions.itemByName(phNameVer).invoke();
