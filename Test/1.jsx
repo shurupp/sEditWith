@@ -1,0 +1,1 @@
+$.writeln("Hello from Photoshop");

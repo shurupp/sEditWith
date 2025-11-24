@@ -1,7 +1,13 @@
 #target InDesign;
 
+//TODO направляющие в Photoshop по границам фрейма
 
 var myDoc = app.activeDocument;
+
+var myTool = app.toolBoxTools; //// НЕ РАБОТАЕТ
+var myOldTool = myTool;
+myTool.currentTool = UITools.DIRECT_SELECTION_TOOL;
+// переключаем на инструмент Direct Selection
 
 //GET SELECTION
 var mySel = app.selection[0];
@@ -84,23 +90,23 @@ if (app.selection != 0) {
     //alert(myFileExt, 'Extension =');
 
 
-    //var myListMenu = app.menus.item("$ID/Main").submenus.item("$ID/Edit").submenus.item("$ID/Edit With").submenus.everyItem().getElements();;
+    //var myListMenu = app.menus.item("$ID/Main").submenus.item("$ID/Edit").submenus.item("$ID/Edit With").submenus.everyItem().getElements();
 
     myListMenu = app.menuActions.everyItem().getElements();
     //var myListMenu = app.menus.everyItem().getElements();
     //alert(myListMenu.length);
     for (var i = 0; i < myListMenu.length; i++) {
-        if (myListMenu[i].name.search('Adobe Photoshop') != -1) {
-            //alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Phoroshop ID:' + myListMenu[i].id);
+        if (myListMenu[i].name.search('Photoshop 2024') != -1) {
+            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Photoshop ID:' + myListMenu[i].id);
             phNameVer = myListMenu[i].name;
             phIDVer = myListMenu[i].id;
-            //alert(phNameVer, i + ' zzzzzzzz');
+            alert(phNameVer, i + ' version');
         }
-        if (myListMenu[i].name.search('Adobe Illustrator') != -1) {
-            //alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Illutrator ID: ' + myListMenu[i].id);
+        if (myListMenu[i].name.search('Illustrator 2024') != -1) {
+            alert(myListMenu[i].area + ' : ' + myListMenu[i].name, 'Illutrator ID: ' + myListMenu[i].id);
             illNameVer = myListMenu[i].name;
             illIDVer = myListMenu[i].id;
-            //alert(IllNameVer, i + ' yyyyyyyyy');
+            alert(IllNameVer, i + ' yyyyyyyyy');
         }
     }
 
@@ -114,6 +120,62 @@ if (app.selection != 0) {
         //              exit();
     }
 
+    try {
+        app.menuActions.item("$ID/" + phNameVer).invoke()
+    } catch (e) {
+        alert('не сработало 1', '');
+        try {
+            app.menuActions.itemByID(PhIDVer).invoke()
+        } catch (e) {
+            alert('не сработало 2', '');
+            try {
+                app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Edit").submenus.itemByName("$ID/Edit With").menuItems.itemByName("$ID/" + phNameVer).associatedMenuAction.invoke()
+            } catch (e) {
+                alert('не сработало 3', '')
+            }
+        }
+    }
+
+    /*
+
+    var linkPanel = app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Window").menuItems.itemByName("$ID/Links");
+    // Check if the menu item is enabled
+    if (linkPanel.enabled) {
+        // Invoke the menu action for Edit with Photoshop
+        alert('linx открыта', 'Недоступно');
+    } else {
+        linkPanel.associatedMenuAction.invoke();
+    }
+
+    */
+
+
+
+    //app.executeMenuCommand(phNameVer);
+
+    /*
+        alert(phNameVer,'12312313123123');
+        //alert(app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Edit").submenus.itemByName("$ID/Edit with").menuItems.itemByName("$ID/" + phNameVer));
+        var showMenuItem = app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Edit").submenus.itemByName("$ID/Edit With").menuItems.itemByName("$ID/" + phNameVer);
+        showMenuItem.associatedMenuAction.invoke();
+    */
+
+    // Define the menu item for Edit with Photoshop
+    //var editMenuItem = app.menus.itemByName("$ID/Edit").submenus.itemByName("$ID/With").menuItems.itemByName("$ID/Photoshop");
+    /*
+    // Check if the menu item is enabled
+    if (editMenuItem.enabled) {
+        // Invoke the menu action for Edit with Photoshop
+        editMenuItem.associatedMenuAction.invoke();
+    } else {
+        alert('Edit with Photoshop недоступен', 'Недоступно');
+    }
+
+    }
+
+    */
+}
+/*
     switch (myFileExt) {
         case "eps":
         case "ai":
@@ -130,7 +192,18 @@ if (app.selection != 0) {
                 app.menuActions.itemByName(illNameVer).invoke();
                 //app.menuActions.itemByID(illIDVer).invoke();
             } catch (e) {
-                alert('Не удалось открыть в Illustrator', 'Error');
+                alert('Не удалось открыть в Illustrator по Name', 'Error');
+                alert(e);
+
+                try {
+                    //app.menuActions.itemByName(illNameVer).invoke();
+                    app.menuActions.itemByID(illIDVer).invoke();
+                } catch (ee) {
+                    alert('Не удалось открыть в Illustrator по ID', 'Error');
+                    alert(ee);
+                    exit();
+                }
+
                 exit();
             }
 
@@ -160,16 +233,44 @@ if (app.selection != 0) {
                         }
             */
 
-//TODO НЕ срабатывает, если Photoshop (default)...
+//TODO app.executeMenuCommand(".@class:AdobePhotoshop, .@target:'" + myFileExt + "'");
 
+/*
 
- //TODO app.executeMenuCommand(".@class:AdobePhotoshop, .@target:'" + myFileExt + "'");
+var showMenuItem = app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Object").menuItems.itemByName("$ID/"+phNameVer);
+
 
             try {
-                app.menuActions.itemByName(phNameVer).invoke();
-                //app.menuActions.itemByID(phIDVer).invoke();
+                //exec("open -a Adobe Illustrator '" + fileName + "'");
+                //app.menuActions.itemByName(phNameVer).invoke();
+
+
+
+if(showMenuItem.enabled) 
+
+    showMenuItem.associatedMenuAction.invoke();
+
+//var hideMenuItem = app.menus.itemByName("$ID/Main").submenus.itemByName("$ID/Object").menuItems.itemByName("$ID/Hide");
+//if(hideMenuItem.enabled) 
+   //hideMenuItem.associatedMenuAction.invoke();
+
+
+                alert(app.menuActions.itemByID(phIDVer).name, 'invoke');
+                app.menuActions.itemByID(phIDVer).invoke();
             } catch (e) {
-                alert('Не удалось открыть в Photoshop', 'Error');
+                alert('Не удалось открыть в Photoshop по Name', 'Error');
+                alert(e);
+
+                try {
+                    //app.menuActions.itemByName(phNameVer).invoke();
+                    app.menuActions.itemByID(phIDVer).invoke();
+                } catch (ee) {
+                    alert('Не удалось открыть в Photoshop по ID', 'Error');
+                    alert(ee);
+                    exit();
+                }
+
+
                 exit();
             }
 
